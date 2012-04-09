@@ -123,7 +123,7 @@ handle_info(_Info, State) ->
 %% -------------------------------------------------------------------
 %% @private
 %% @doc
-%% 
+%% It is called when the server is going to terminate.
 %% @end
 %% -------------------------------------------------------------------
 -spec terminate(_, _) -> ok.
@@ -134,7 +134,7 @@ terminate(_Reason, _State) ->
 %% -------------------------------------------------------------------
 %% @private
 %% @doc
-%% 
+%% Converts process state when code is changed
 %% @end
 %% -------------------------------------------------------------------
 -spec code_change(_, State, _) -> {ok, State}.
