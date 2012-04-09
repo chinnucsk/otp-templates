@@ -12,20 +12,20 @@
 
 %% Public API
 -export([
-		 start_link/0,
-		 sync_msg/1,
-		 async_msg/1
-		]).
+         start_link/0,
+         sync_msg/1,
+         async_msg/1
+        ]).
 
 %% gen_server callbacks
 -export([
-		 init/1,
-		 handle_call/3,
-		 handle_cast/2,
-		 handle_info/2,
-		 terminate/2,
-		 code_change/3
-		]).
+         init/1,
+         handle_call/3,
+         handle_cast/2,
+         handle_info/2,
+         terminate/2,
+         code_change/3
+        ]).
 
 -define(SERVER, ?MODULE).
 
@@ -43,7 +43,7 @@
 -spec start_link() -> {ok, pid()}.
 
 start_link() ->
-	gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
+    gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -53,7 +53,7 @@ start_link() ->
 -spec sync_msg(term()) -> ok.
 
 sync_msg(Msg) ->
-	gen_server:call(?SERVER, {test, Msg}).
+    gen_server:call(?SERVER, {test, Msg}).
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -63,7 +63,7 @@ sync_msg(Msg) ->
 -spec async_msg(term()) -> ok.
 
 async_msg(Msg) ->
-	gen_server:cast(?SERVER, {test, Msg}).
+    gen_server:cast(?SERVER, {test, Msg}).
 
 
 %% ===================================================================
@@ -79,7 +79,7 @@ async_msg(Msg) ->
 -spec init([]) -> {ok, #state{}}.
 
 init([]) ->
-	{ok, #state{}}.
+    {ok, #state{}}.
 
 %% -------------------------------------------------------------------
 %% @private
@@ -90,10 +90,10 @@ init([]) ->
 -spec handle_call(_, _, State) -> {reply, ok, State}.
 
 handle_call({test, Msg}, _From, State) ->
-	io:format("Got sync message: \'~p\'~n", [Msg]),
-	{reply, ok, State};
+    io:format("Got sync message: \'~p\'~n", [Msg]),
+    {reply, ok, State};
 handle_call(_Request, _From, State) ->
-	{reply, ok, State}.
+    {reply, ok, State}.
 
 %% -------------------------------------------------------------------
 %% @private
@@ -104,10 +104,10 @@ handle_call(_Request, _From, State) ->
 -spec handle_cast(_, State) -> {noreply, State}. 
 
 handle_cast({test, Msg}, State) ->
-	io:format("Got async message: \'~p\'~n", [Msg]),
-	{noreply, State};
+    io:format("Got async message: \'~p\'~n", [Msg]),
+    {noreply, State};
 handle_cast(_Request, State) ->
-	{noreply, State}.
+    {noreply, State}.
 
 %% -------------------------------------------------------------------
 %% @private
@@ -118,7 +118,7 @@ handle_cast(_Request, State) ->
 -spec handle_info(_, State) -> {noreply, State}.
 
 handle_info(_Info, State) ->
-	{noreply, State}.
+    {noreply, State}.
 
 %% -------------------------------------------------------------------
 %% @private
@@ -129,7 +129,7 @@ handle_info(_Info, State) ->
 -spec terminate(_, _) -> ok.
 
 terminate(_Reason, _State) ->
-	ok.
+    ok.
 
 %% -------------------------------------------------------------------
 %% @private
