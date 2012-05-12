@@ -12,9 +12,9 @@
 
 %% application callbacks
 -export([
-		 start/2,
-		 stop/1
-		]).
+         start/2,
+         stop/1
+        ]).
 
 
 %% ===================================================================
@@ -24,14 +24,14 @@
 %% @private
 %% @doc starts application's top supervisor
 start(_StartType, StartArgs) ->
-	case app_sup:start_link(StartArgs) of
-		{ok, Pid} ->
-			{ok, Pid};
-		Error ->
-			Error
-	end.
+    case app_sup:start_link(StartArgs) of
+        {ok, Pid} ->
+            {ok, Pid};
+        Error ->
+            Error
+    end.
 
 %% @private
 %% @doc stops application
 stop(_State) ->
-	ok.
+    ok.
