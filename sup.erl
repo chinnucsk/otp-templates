@@ -1,6 +1,6 @@
 %%%-------------------------------------------------------------------
 %%% @author Juraj Hlista <juro.hlista@gmail.com>
-%%% @copyright
+%%% 
 %%% @doc
 %%% supervisor template
 %%% @end
