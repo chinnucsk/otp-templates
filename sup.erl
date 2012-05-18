@@ -1,6 +1,6 @@
 %%%-------------------------------------------------------------------
 %%% @author Juraj Hlista <juro.hlista@gmail.com>
-%%% 
+%%% @copyright
 %%% @doc
 %%% supervisor template
 %%% @end
@@ -31,7 +31,7 @@ start_link() ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
 %% ===================================================================
-%% Internal functions
+%% supervisor callbacks
 %% ===================================================================
 
 %% @private
