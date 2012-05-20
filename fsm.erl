@@ -72,11 +72,13 @@ stop() ->
 %% @private
 %% @doc FSM init
 init([]) ->
-  {ok, state_initial, #state{}}.
+    io:format("state_initial~n"),
+    {ok, state_initial, #state{}}.
 
 %% @private
 %% @doc 
 state_initial(to_state1, State) ->
+    io:format("(async) state_initial -> state1~n"),
     {next_state, state1, State};
 state_initial(_Event, State) ->
     {next_state, state_initial, State}.
@@ -84,33 +86,43 @@ state_initial(_Event, State) ->
 %% @private
 %% @doc 
 state1(to_state2, _From, State) ->
-    {next_state, state2, State};
+    io:format("(sync) state1 -> state2~n"),
+    {reply, ok, state2, State};
 state1(_Event, _From, State) ->
-    {next_state, state1, State}.
+    Reply = {error, invalid_message},
+    {reply, Reply, state1, State}.
 
 %% @private
 %% @doc 
-handle_event(to_state3, _StateName, State) ->
+handle_event(to_state3, StateName, State) ->
+    io:format("(async) ~p -> state3~n", [StateName]),
     {next_state, state3, State};
-handle_event(stop, _StateName, State) ->
+handle_event(stop, StateName, State) ->
+    io:format("(async) ~p -> stopped~n", [StateName]),
     {stop, stopped, State};
 handle_event(_Event, StateName, State) ->
     {next_state, StateName, State}.
 
 %% @private
 %% @doc
-handle_sync_event(to_state3, _From, _StateName, State) ->
-    {next_state, state3, State};
+handle_sync_event(to_state3, _From, StateName, State) ->
+    io:format("(sync) ~p -> state3~n", [StateName]),
+    {reply, ok, state3, State};
 handle_sync_event(_Event, _From, StateName, State) ->
-    {next_state, StateName, State}.
+    Reply = {error, invalid_message},
+    {reply, Reply, StateName, State}.
 
-
+%% @private
+%% @doc
 handle_info(_Info, StateName, State) ->
   {next_state, StateName, State}.
 
+%% @private
+%% @doc
 terminate(_Reason, _StateName, _State) ->
   ok.
-
+%% @private
+%% @doc
 code_change(_OldVsn, StateName, State, _Extra) ->
   {ok, StateName, State}.
 
