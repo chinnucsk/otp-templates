@@ -22,7 +22,7 @@
 %% ===================================================================
 
 %% @private
-%% @doc starts application's top supervisor
+%% @doc Starts application's top supervisor
 start(_StartType, StartArgs) ->
     case app_sup:start_link(StartArgs) of
         {ok, Pid} ->
@@ -32,6 +32,6 @@ start(_StartType, StartArgs) ->
     end.
 
 %% @private
-%% @doc stops application
+%% @doc Stops application
 stop(_State) ->
     ok.

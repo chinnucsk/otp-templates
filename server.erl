@@ -80,7 +80,7 @@ handle_info(_Info, State) ->
     {noreply, State}.
 
 %% @private
-%% @doc It is called when the server is going to terminate.
+%% @doc It is called when the server is going to terminate
 terminate(_Reason, _State) ->
     ok.
 

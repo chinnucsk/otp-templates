@@ -37,7 +37,7 @@ start_link() ->
 %% ===================================================================
 
 %% @private
-%% @doc
+%% @doc Supervisor init
 init([]) ->
     ChildProcess = {child_process, {child_process, start_link, []},
         permanent, 5000, worker, [child_process]},

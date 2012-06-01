@@ -65,6 +65,7 @@ sync_all_state3() ->
 stop() ->
     gen_fsm:send_all_state_event(?SERVER, stop).
 
+
 %% ===================================================================
 %% gen_fsm callbacks
 %% ===================================================================
@@ -76,7 +77,7 @@ init([]) ->
     {ok, state_initial, #state{}}.
 
 %% @private
-%% @doc 
+%% @doc Handles async transition from state_initial to state1
 state_initial(to_state1, State) ->
     io:format("(async) state_initial -> state1~n"),
     {next_state, state1, State};
@@ -84,7 +85,7 @@ state_initial(_Event, State) ->
     {next_state, state_initial, State}.
 
 %% @private
-%% @doc 
+%% @doc Handles sync transition from state1 to state2
 state1(to_state2, _From, State) ->
     io:format("(sync) state1 -> state2~n"),
     {reply, ok, state2, State};
@@ -93,7 +94,7 @@ state1(_Event, _From, State) ->
     {reply, Reply, state1, State}.
 
 %% @private
-%% @doc 
+%% @doc Handles async transition from any state to state3 or stop event
 handle_event(to_state3, StateName, State) ->
     io:format("(async) ~p -> state3~n", [StateName]),
     {next_state, state3, State};
@@ -104,7 +105,7 @@ handle_event(_Event, StateName, State) ->
     {next_state, StateName, State}.
 
 %% @private
-%% @doc
+%% @doc Handles sync transition from any state to state3
 handle_sync_event(to_state3, _From, StateName, State) ->
     io:format("(sync) ~p -> state3~n", [StateName]),
     {reply, ok, state3, State};
@@ -113,16 +114,17 @@ handle_sync_event(_Event, _From, StateName, State) ->
     {reply, Reply, StateName, State}.
 
 %% @private
-%% @doc
+%% @doc Handles any other messages than sync or async events or system messages
 handle_info(_Info, StateName, State) ->
   {next_state, StateName, State}.
 
 %% @private
-%% @doc
+%% @doc It is called when the server is going to terminate
 terminate(_Reason, _StateName, _State) ->
   ok.
+  
 %% @private
-%% @doc
+%% @doc Converts process state when code is changed
 code_change(_OldVsn, StateName, State, _Extra) ->
   {ok, StateName, State}.
 
